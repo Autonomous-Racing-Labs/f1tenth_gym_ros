@@ -65,6 +65,8 @@ class GymBridge(Node):
         self.declare_parameter('sy1')
         self.declare_parameter('stheta1')
         self.declare_parameter('kb_teleop')
+        self.declare_parameter('publish_odom_transform')
+        self.declare_parameter('scan_hz')
 
         # check num_agents
         num_agents = self.get_parameter('num_agent').value
@@ -97,6 +99,9 @@ class GymBridge(Node):
         self.ego_namespace = self.get_parameter('ego_namespace').value
         ego_odom_topic = self.ego_namespace + '/' + self.get_parameter('ego_odom_topic').value
         self.scan_distance_to_base_link = self.get_parameter('scan_distance_to_base_link').value
+        self.scan_hz = self.get_parameter('scan_hz').value
+        self.publish_odom_transform = self.get_parameter('publish_odom_transform').value
+        self.odom_transform_counter = 0
         
         if num_agents == 2:
             self.has_opp = True
@@ -127,7 +132,7 @@ class GymBridge(Node):
         # sim physical step timer
         self.drive_timer = self.create_timer(0.01, self.drive_timer_callback)
         # topic publishing timer
-        self.timer = self.create_timer(0.004, self.timer_callback)
+        self.timer = self.create_timer(1.0/self.scan_hz, self.timer_callback) #was 0.0004
 
         # transform broadcaster
         self.br = TransformBroadcaster(self)
@@ -333,7 +338,9 @@ class GymBridge(Node):
         ego_ts.header.stamp = ts
         ego_ts.header.frame_id = 'map'
         ego_ts.child_frame_id = self.ego_namespace + '/base_link'
-        self.br.sendTransform(ego_ts)
+        if self.publish_odom_transform or self.odom_transform_counter == 0 :
+            self.br.sendTransform(ego_ts)
+            self.odom_transform_counter += 1
 
         if self.has_opp:
             opp_t = Transform()

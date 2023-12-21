@@ -35,14 +35,16 @@ bridge:
     opp_drive_topic: 'opp_drive'
 
     # transform related
-    scan_distance_to_base_link: 0.0
+    publish_odom_transform: False #true to publish ground truth data from gym
+    scan_distance_to_base_link: 0.3
     
     # laserscan parameters
     scan_fov: 4.7
     scan_beams: 1080
+    scan_hz: 20.0
 
     # map parameters
-    map_path: '/sim_ws/src/f1tenth_gym_ros/maps/levine'
+    map_path: '/home/wette/sim_ws/src/f1tenth_gym_ros/maps/levine_blocked_light'
     map_img_ext: '.png'
 
     # opponent parameters
