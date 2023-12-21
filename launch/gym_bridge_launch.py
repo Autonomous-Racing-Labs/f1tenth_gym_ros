@@ -83,6 +83,15 @@ def generate_launch_description():
         remappings=[('/robot_description', 'opp_robot_description')]
     )
 
+    gap_follower_node = Node(
+        package='gap_follow',
+        executable='gap_follower',
+        output='screen',
+        name='gap_follower',
+        parameters=[]
+    )
+
+
     # finalize
     ld.add_action(rviz_node)
     ld.add_action(bridge_node)
@@ -91,5 +100,7 @@ def generate_launch_description():
     ld.add_action(ego_robot_publisher)
     if has_opp:
         ld.add_action(opp_robot_publisher)
+
+    ld.add_action(gap_follower_node)
 
     return ld
