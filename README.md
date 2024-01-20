@@ -40,6 +40,7 @@ This installation guide will be split into instruction for installing the ROS 2 
   rosdep install -i --from-path src --rosdistro iron -y
   ```
 - Build the workspace: ```colcon build```
+- Run the simulation: ```ros2 launch f1tenth_gym_ros gym_bridge_launch.py```
 
 ## With an NVIDIA gpu:
 
