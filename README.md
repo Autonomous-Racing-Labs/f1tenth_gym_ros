@@ -35,6 +35,8 @@ This installation guide will be split into instruction for installing the ROS 2 
   ```bash
   source /opt/ros/iron/setup.bash
   cd ..
+  apt install python3-rosdep2 python3-colcon-ros
+  rosdep update
   rosdep install -i --from-path src --rosdistro iron -y
   ```
 - Build the workspace: ```colcon build```
