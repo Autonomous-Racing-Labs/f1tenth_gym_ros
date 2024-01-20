@@ -40,62 +40,13 @@ This installation guide will be split into instruction for installing the ROS 2 
   rosdep install -i --from-path src --rosdistro iron -y
   ```
 - Build the workspace: ```colcon build```
-- Run the simulation: ```ros2 launch f1tenth_gym_ros gym_bridge_launch.py```
+- Run the simulation:
+  ```bash
+  source /opt/ros/iron/setup.bash
+  source install/local_setup.bash
+  ros2 launch f1tenth_gym_ros gym_bridge_launch.py
+  ```
 
-## With an NVIDIA gpu:
-
-**Install the following dependencies:**
-
-- **Docker** Follow the instructions [here](https://docs.docker.com/install/linux/docker-ce/ubuntu/) to install Docker. A short tutorial can be found [here](https://docs.docker.com/get-started/) if you're not familiar with Docker. If you followed the post-installation steps you won't have to prepend your docker and docker-compose commands with sudo.
-- **nvidia-docker2**, follow the instructions [here](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html) if you have a support GPU. It is also possible to use Intel integrated graphics to forward the display, see details instructions from the Rocker repo. If you are on windows with an NVIDIA GPU, you'll have to use WSL (Windows Subsystem for Linux). Please refer to the guide [here](https://developer.nvidia.com/cuda/wsl), [here](https://docs.nvidia.com/cuda/wsl-user-guide/index.html), and [here](https://dilililabs.com/zh/blog/2021/01/26/deploying-docker-with-gpu-support-on-windows-subsystem-for-linux/).
-- **rocker** [https://github.com/osrf/rocker](https://github.com/osrf/rocker). This is a tool developed by OSRF to run Docker images with local support injected. We use it for GUI forwarding. If you're on Windows, WSL should also support this.
-
-**Installing the simulation:**
-
-1. Clone this repo
-2. Build the docker image by:
-```bash
-$ cd f1tenth_gym_ros
-$ docker build -t f1tenth_gym_ros -f Dockerfile .
-```
-3. To run the containerized environment, start a docker container by running the following. (example showned here with nvidia-docker support). By running this, the current directory that you're in (should be `f1tenth_gym_ros`) is mounted in the container at `/sim_ws/src/f1tenth_gym_ros`. Which means that the changes you make in the repo on the host system will also reflect in the container.
-```bash
-$ rocker --nvidia --x11 --volume .:/sim_ws/src/f1tenth_gym_ros -- f1tenth_gym_ros
-```
-
-## Without an NVIDIA gpu:
-
-**Install the following dependencies:**
-
-If your system does not support nvidia-docker2, noVNC will have to be used to forward the display.
-- Again you'll need **Docker**. Follow the instruction from above.
-- Additionally you'll need **docker-compose**. Follow the instruction [here](https://docs.docker.com/compose/install/) to install docker-compose.
-
-**Installing the simulation:**
-
-1. Clone this repo 
-2. Bringup the novnc container and the sim container with docker-compose:
-```bash
-docker-compose up
-``` 
-3. In a separate terminal, run the following, and you'll have the a bash session in the simulation container. `tmux` is available for convenience.
-```bash
-docker exec -it f1tenth_gym_ros-sim-1 /bin/bash
-```
-4. In your browser, navigate to [http://localhost:8080/vnc.html](http://localhost:8080/vnc.html), you should see the noVNC logo with the connect button. Click the connect button to connect to the session.
-
-# Launching the Simulation
-
-1. `tmux` is included in the contianer, so you can create multiple bash sessions in the same terminal.
-2. To launch the simulation, make sure you source both the ROS2 setup script and the local workspace setup script. Run the following in the bash session from the container:
-```bash
-$ source /opt/ros/foxy/setup.bash
-$ source install/local_setup.bash
-$ ros2 launch f1tenth_gym_ros gym_bridge_launch.py
-```
-A rviz window should pop up showing the simulation either on your host system or in the browser window depending on the display forwarding you chose.
-
-You can then run another node by creating another bash session in `tmux`.
 
 # Configuring the simulation
 - The configuration file for the simulation is at `f1tenth_gym_ros/config/sim.yaml`.
