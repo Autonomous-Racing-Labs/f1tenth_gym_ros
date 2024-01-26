@@ -35,7 +35,7 @@ bridge:
     opp_drive_topic: 'opp_drive'
 
     # transform related
-    publish_odom_transform: False #true to publish ground truth data from gym
+    publish_odom_transform: true #true to publish ground truth data from gym
     scan_distance_to_base_link: 0.3
     
     # laserscan parameters
