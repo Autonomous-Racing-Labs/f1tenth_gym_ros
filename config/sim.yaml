@@ -36,7 +36,7 @@ bridge:
 
     # transform related
     publish_odom_transform: true #true to publish ground truth data from gym
-    scan_distance_to_base_link: 0.3
+    scan_distance_to_base_link: 0.0
     
     # laserscan parameters
     scan_fov: 4.7
