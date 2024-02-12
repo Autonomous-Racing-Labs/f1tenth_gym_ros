@@ -27,7 +27,7 @@ This installation guide will be split into instruction for installing the ROS 2 
 - Clone the repo into the workspace:
   ```bash
   cd $HOME/sim_ws/src
-  git clone https://github.com/f1tenth/f1tenth_gym_ros
+  git clone https://github.com/Autonomous-Racing-Labs/f1tenth_gym_ros.git
   ```
 - Update correct parameter for path to map file:
   Go to `sim.yaml` [https://github.com/f1tenth/f1tenth_gym_ros/blob/main/config/sim.yaml](https://github.com/f1tenth/f1tenth_gym_ros/blob/main/config/sim.yaml) in your cloned repo, change the `map_path` parameter to point to the correct location. It should be `'<your_home_dir>/sim_ws/src/f1tenth_gym_ros/maps/levine'`
