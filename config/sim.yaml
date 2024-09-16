@@ -40,11 +40,11 @@ bridge:
     
     # laserscan parameters
     scan_fov: 4.7
-    scan_beams: 1080
+    scan_beams: 1079
     scan_hz: 20.0
 
     # map parameters
-    map_path: '/home/wette/sim_ws/src/f1tenth_gym_ros/maps/levine_blocked_light'
+    map_path: '/home/wette/f1tenth/f1tenth_racecar_ws/src/f1tenth_gym_ros/maps/levine_blocked'
     map_img_ext: '.png'
 
     # opponent parameters
